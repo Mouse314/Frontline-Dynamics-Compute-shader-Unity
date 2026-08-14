@@ -1,0 +1,35 @@
+# Unity generated folders
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+MemoryCaptures/
+
+# Builds and caches
+Build/
+Builds/
+*.csproj
+*.sln
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.suo
+*.tmp
+*.tmp.meta
+*.pdb
+*.opendb
+*.VC.db
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+
+# Unity meta / cache noise that should not be tracked
+*.pidb.meta
+*.pdb.meta
+*.opendb.meta
+*.VC.db.meta
