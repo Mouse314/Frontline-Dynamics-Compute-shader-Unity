@@ -4,46 +4,44 @@ using UnityEngine.InputSystem;
 
 public class Draw : MonoBehaviour
 {
-    public GameObject canvas;
+[Header("--- UI & Scene References ---")]
     [SerializeField] private GameObject canvasBase;
-    public float brushSize = 0.1f;
+    public GameObject canvas;
+
+    [Header("--- Brush Settings ---")]
+    [Range(0.0001f, 1f)] public float brushSize = 0.1f;
     public Color brushColor = Color.white;
+    [Range(0.0f, 1.0f)] public float globalAlpha = 1.0f;
 
-    [SerializeField] Material mapMaterial;
+    [Header("--- Water Cutoff Settings ---")]
+    public Color waterColor = new Color(0.0f, 0.5f, 1.0f, 1.0f);
+    [SerializeField] [Range(0.0f, 1.0f)] private float waterCutoffTolerance = 0.1f;
 
-
-    [Range(0.0f, 1.0f)]
-    public float globalAlpha = 1.0f;
-
+    [Header("--- Resources & Textures ---")]
     [SerializeField] private Texture2D mapTexture;
 
-    public Texture2D text;
+    [Header("--- Materials & Shaders ---")]
+    [SerializeField] private Material mapMaterial;
+    public Material _drawMaterial;    // Лучше убрать нижнее подчеркивание для public, например: drawMaterial
+    public Material _displayMaterial; // Лучше убрать нижнее подчеркивание для public, например: displayMaterial
     public ComputeShader computeShader;
 
+    // --- Private Render Buffers & States ---
     private RenderTexture _rtBufferA;
     private RenderTexture _rtBufferB;
     private bool _useBufferA = true;
-    public Material _drawMaterial;
-    public Material _displayMaterial;
-
-    private static readonly int MainTexID = Shader.PropertyToID("_BaseMap");
-    private const string SavedTextureFileName = "drawn-map.png";
-
-    private bool _isInitialized;
-    private bool _hasSavedOnExit;
-
-    private string SavedTexturePath => Path.Combine(Application.persistentDataPath, SavedTextureFileName);
-
-    private Vector2 _lastMousePosition;
-
     private int _kernelIndex;
-
     private bool _isComputing = false;
 
-    public Color waterColor = new Color(0.0f, 0.5f, 1.0f, 1.0f);
-    [SerializeField]
-    [Range(0.0f, 1.0f)]
-    private float waterCutoffTolerance = 0.1f;
+    // --- System & Interaction States ---
+    private bool _isInitialized;
+    private bool _hasSavedOnExit;
+    private Vector2 _lastMousePosition;
+
+    // --- Serialization & Constants ---
+    private const string SavedTextureFileName = "drawn-map.png";
+    private static readonly int MainTexID = Shader.PropertyToID("_BaseMap");
+    private string SavedTexturePath => Path.Combine(Application.persistentDataPath, SavedTextureFileName);
 
 
     void Start()
