@@ -131,6 +131,12 @@ public class Draw : MonoBehaviour
             _displayMaterial.SetVector("_BrushPosition", hit.textureCoord);
         }
 
+        if (Keyboard.current.leftCtrlKey.isPressed) {
+            _drawMaterial.SetInt("_IsErasing", 1);
+        } else {
+            _drawMaterial.SetInt("_IsErasing", 0);
+        }
+
         _lastMousePosition = mousePos;
     }
 

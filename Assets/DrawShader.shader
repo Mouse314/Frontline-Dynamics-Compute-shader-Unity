@@ -14,7 +14,7 @@ Shader "Custom/DrawShader"
     {
         Tags { "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent" }
 
-        Blend SrcAlpha OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha , One Zero
         
         Pass
         {
@@ -48,6 +48,7 @@ Shader "Custom/DrawShader"
                 float _BrushSize;
                 float _AspectRatio;
                 float _IsDrawing;
+                float _IsErasing;
                 float4 _BrushColor;
             CBUFFER_END
 
@@ -71,19 +72,24 @@ Shader "Custom/DrawShader"
 
                 if (length(uvDiff) < _BrushSize)
                 {
-                    if (_IsDrawing < 0.5)
-                    {
-                        if (length(uvDiff) > _BrushSize * 0.95)
-                        {
-                            half4 inverseCol = 1.0 - col;
-                            resultColor = inverseCol;
-                        }
-                        else {
-                            resultColor = col;
-                        }
-                    } 
+                    if (_IsErasing > 0.5) {
+                        resultColor = float4(1, 1, 1, 0.0);
+                    }
                     else {
-                        resultColor = _BrushColor;
+                        if (_IsDrawing < 0.5)
+                        {
+                            if (length(uvDiff) > _BrushSize * 0.95)
+                            {
+                                half4 inverseCol = 1.0 - col;
+                                resultColor = inverseCol;
+                            }
+                            else {
+                                resultColor = col;
+                            }
+                        } 
+                        else {
+                            resultColor = _BrushColor;
+                        }
                     }
                 } 
                 else {
