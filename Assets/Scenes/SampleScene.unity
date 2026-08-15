@@ -274,11 +274,15 @@ MonoBehaviour:
   canvasBase: {fileID: 608799819}
   brushSize: 0.05
   brushColor: {r: 0, g: 0.12475371, b: 1, a: 1}
+  mapMaterial: {fileID: 2100000, guid: 2766e7d6357aed34bba8bf2e3c241c07, type: 2}
   globalAlpha: 1
-  mapTexture: {fileID: 2800000, guid: 1de984a97179ded46b2ba7f1605033cb, type: 3}
+  mapTexture: {fileID: 2800000, guid: 90d5b0365e180ba4f82638099f453b6e, type: 3}
   text: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+  computeShader: {fileID: 7200000, guid: 2d1faf71276c4434a92715ae9f7110fa, type: 3}
   _drawMaterial: {fileID: 2100000, guid: 4294e3ef43b1da04895096b0f7446489, type: 2}
   _displayMaterial: {fileID: 2100000, guid: c41daeea1604b9a4291ba8184b0c37ac, type: 2}
+  waterColor: {r: 0, g: 0.5, b: 1, a: 1}
+  waterCutoffTolerance: 0.1
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
