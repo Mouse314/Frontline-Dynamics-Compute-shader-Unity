@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfca4b6baabc3f14ab45d7051c427abe, type: 3}
+  m_Name: Germany
+  m_EditorClassIdentifier: Assembly-CSharp::Fraction
+  fractionID: 0
+  fractionColor: {r: 0.018902302, g: 0, b: 1, a: 0}
+  fractionName: German

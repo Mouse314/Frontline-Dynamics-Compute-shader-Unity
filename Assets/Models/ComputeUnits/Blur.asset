@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a6b2be4fa4f24479d2587c1cbee13b, type: 3}
+  m_Name: Blur
+  m_EditorClassIdentifier: Assembly-CSharp::ComputeUnit
+  ID: 0
+  computeShader: {fileID: 7200000, guid: 2d1faf71276c4434a92715ae9f7110fa, type: 3}
+  Name: Blur
+  actionType: 1

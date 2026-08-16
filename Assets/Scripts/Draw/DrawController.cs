@@ -2,9 +2,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Draw : MonoBehaviour
+public class DrawController : MonoBehaviour
 {
-[Header("--- UI & Scene References ---")]
+    [Header("--- UI & Scene References ---")]
     [SerializeField] private GameObject canvasBase;
     public GameObject canvas;
 
@@ -15,7 +15,7 @@ public class Draw : MonoBehaviour
 
     [Header("--- Water Cutoff Settings ---")]
     public Color waterColor = new Color(0.0f, 0.5f, 1.0f, 1.0f);
-    [SerializeField] [Range(0.0f, 1.0f)] private float waterCutoffTolerance = 0.1f;
+    [SerializeField][Range(0.0f, 1.0f)] private float waterCutoffTolerance = 0.1f;
 
     [Header("--- Resources & Textures ---")]
     [SerializeField] private Texture2D mapTexture;
@@ -33,6 +33,7 @@ public class Draw : MonoBehaviour
     private int _kernelIndex;
     private bool _isComputing = false;
 
+
     // --- System & Interaction States ---
     private bool _isInitialized;
     private bool _hasSavedOnExit;
@@ -43,12 +44,13 @@ public class Draw : MonoBehaviour
     private static readonly int MainTexID = Shader.PropertyToID("_BaseMap");
     private string SavedTexturePath => Path.Combine(Application.persistentDataPath, SavedTextureFileName);
 
+    [Header("--- Controllers ---")]
+    public ComputeWorker computeWorker;
+    public FractionsManager fractionsManager;
+
 
     void Start()
     {
-        // _drawMaterial = canvas.GetComponent<Renderer>().material;
-        // _displayMaterial = canvasBase.GetComponent<Renderer>().material;
-
         _displayMaterial.SetTexture("_MapTexture", mapTexture);
 
         _kernelIndex = computeShader.FindKernel("CSMain");
@@ -136,7 +138,7 @@ public class Draw : MonoBehaviour
             _drawMaterial.SetFloat("_BrushSize", brushSize);
             _displayMaterial.SetFloat("_BrushSize", brushSize);
             _drawMaterial.SetColor("_BrushColor", brushColor);
-            computeShader.SetFloat("_Time", Time.time);
+            computeWorker.SetData(Time.time);
 
             RenderTexture activeSource = _useBufferA ? _rtBufferA : _rtBufferB;
             RenderTexture activeDest = _useBufferA ? _rtBufferB : _rtBufferA;
@@ -162,13 +164,10 @@ public class Draw : MonoBehaviour
             {
                 Graphics.Blit(activeSource, tempRT, _drawMaterial);
 
-                computeShader.SetTexture(_kernelIndex, "InputTexture", tempRT);
-                computeShader.SetTexture(_kernelIndex, "OutputTexture", activeDest);
-
                 int threadGroupsX = Mathf.CeilToInt(activeSource.width / 8.0f);
                 int threadGroupsY = Mathf.CeilToInt(activeSource.height / 8.0f);
 
-                computeShader.Dispatch(_kernelIndex, threadGroupsX, threadGroupsY, 1);
+                computeWorker.Dispatch(_kernelIndex, threadGroupsX, threadGroupsY, 1, tempRT, activeDest);
             }
             else
             {
